@@ -61,3 +61,5 @@ build/
 parameta-core-soap.iml
 *.iml
 *.iml
+.idea/jarRepositories.xml
+parameta-core-soap.iml

@@ -9,6 +9,12 @@ import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
+import java.math.BigInteger;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.ZoneId;
+
 @Endpoint
 @Slf4j
 @RequiredArgsConstructor
@@ -32,13 +38,34 @@ public class EmployeeController {
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getEmployeeByDocRequest")
     @ResponsePayload
-    public GetEmployeeByDocResponse getByDoc(@RequestPayload GetEmployeeByDocRequest request) {
+    public GetEmployeeByDocResponse getByDoc(@RequestPayload GetEmployeeByDocRequest request)
+    {
         return this.employeeService.getByDoc(request);
     }
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "addEmployeeRequest")
     @ResponsePayload
-    public AddEmployeeResponse addArticle(@RequestPayload AddEmployeeRequest request) {
-        return this.employeeService.save(request);
+    public AddEmployeeResponse addArticle(@RequestPayload AddEmployeeRequest request)
+    {
+        var birthday = Instant.ofEpochMilli(request.getEmployeeSoap().getBirthday().toGregorianCalendar().getTime().getTime())
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate();
+        var now = LocalDate.now();
+
+        Period period = Period.between(birthday, now);
+        if (period.getYears() > 17)
+        {
+            return this.employeeService.save(request);
+        }
+        else
+        {
+            var response = new AddEmployeeResponse();
+            var basicResponse = new BasicResponse();
+            basicResponse.setCode(new BigInteger("3"));
+            basicResponse.setDescription("Unauthorized worker");
+
+            response.setBasicResponse(basicResponse);
+            return response;
+        }
     }
 }
