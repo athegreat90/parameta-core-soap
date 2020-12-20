@@ -57,3 +57,7 @@ build/
 .vscode/
 
 .idea/.gitignore
+*.xjb
+parameta-core-soap.iml
+*.iml
+*.iml
