@@ -1,0 +1,119 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="https://parameta-employee-soap.herokuapp.com/ws/gen"
+           targetNamespace="https://parameta-employee-soap.herokuapp.com/ws/gen" elementFormDefault="qualified">
+    <xs:element name="getAllEmployeesRequest">
+        <xs:complexType/>
+    </xs:element>
+    <xs:element name="getAllEmployeesResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="employeeSoap" type="tns:employeeSoap" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getEmployeeByIdRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:integer"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getEmployeeByIdResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="employeeSoap" type="tns:employeeSoap"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getEmployeeByDocRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="document" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getEmployeeByDocResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="employeeSoap" type="tns:employeeSoap"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="addEmployeeRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="employeeSoap" type="tns:employeeSoap"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="addEmployeeResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="basicResponse" type="tns:basicResponse"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+
+    <xs:element name="updateEmployeeRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="employeeSoap" type="tns:employeeSoap"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="updateEmployeeResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="basicResponse" type="tns:basicResponse"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="deleteEmployeeRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="employeeId" type="xs:integer"/>
+                <xs:element name="employeeDoc" type="xs:integer"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="deleteEmployeeResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="basicResponse" type="tns:basicResponse"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="basicResponse">
+        <xs:sequence>
+            <xs:element name="code" type="xs:integer"/>
+            <xs:element name="description" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="employeeSoap">
+        <xs:sequence>
+            <xs:element name="id" type="xs:int"/>
+            <xs:element name="nameEmployee" type="xs:string"/>
+            <xs:element name="lastname" type="xs:string"/>
+            <xs:element name="typeDocument" type="tns:typeDoc"/>
+            <xs:element name="document" type="xs:string"/>
+            <xs:element name="birthday" type="xs:date"/>
+            <xs:element name="startDate" type="xs:date"/>
+            <xs:element name="roleEmployee" type="xs:string"/>
+            <xs:element name="salary" type="xs:double"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:simpleType name="typeDoc">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="TI"/>
+            <xs:enumeration value="CC"/>
+            <xs:enumeration value="CE"/>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>
